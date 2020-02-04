@@ -1,39 +1,34 @@
+from tkinter import *
+import os
 
-import socket
-socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-socket.bind(('', 1555))
 
-def traitement(truc):
-	decoded = truc.decode('utf-8')
-	return(decoded)
+def ipfinder():
+	return str(os.popen('ifconfig | grep -E "([0-9]{1,3}[\.]){3}[0-9]{1,3}"').readlines())[15:-100]
 
-while True:
-        socket.listen(5)
-        client, address = socket.accept()
-        print('connecté à ', address)
-        response = client.recv(255)
-        if response != "":
-        		print(traitement(response))
 
-print(fermeture)
-client.close()
-stock.close()
-"""
-def serveur(port):
-	def traitement(ordre):
-		decoded = ordre.decode('utf-8')
-		return(decoded)
-	import socket
-	socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	socket.bind(('', 15555))
-	while True:
-		socket.listen(5)
-		client, address = socket.accept()
-		print('connecté à ', address)
-		response = client.recv(255)
-        if response != "": 
-        	print(traitement(response))
-    client.close()
-	stock.close()
-serveur(15555)
-"""
+def multi():
+	multijoueur = Tk()
+	multijoueur.geometry("300x300")
+	multijoueur.resizable(0,0)
+	multijoueur.title("Multijoueur")
+	try:
+		pseudo
+		existance_pseudo = 1
+	except:
+		existance_pseudo = 0
+	if existance_pseudo == 0:
+		pseudotexte = Label(multijoueur, text="vous n'avez pas de pseudo")
+		pseudo = Entry(multijoueur, width=10)
+
+
+
+	iptexte = Label(multijoueur, text="votre ip locale est: "+ipfinder())
+	iptexte.pack()
+	pseudo.pack()
+	bouton_quitter = Button(multijoueur, text="Quitter", command=multijoueur.quit)
+	bouton_quitter.pack()
+
+	multijoueur.mainloop()
+
+multi()
+
